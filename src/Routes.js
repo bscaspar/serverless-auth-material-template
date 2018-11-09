@@ -18,8 +18,10 @@ import { Glyphicon } from "react-bootstrap";
 //     )
 //   );
 // }
-
+//Loading spinner is buggy at the moment, flashing the spinner despite the delay prop set.
 const LoadingSpinner = () => <Glyphicon glyph="refresh" className="spinning" />;
+
+//Enables on-demand route-based loading for file chunks with the Loadable library, which takes advantage of Async file loading and adds a few other features
 
 const AsyncHome = Loadable({
   loader: () => import("./containers/Home"),
@@ -37,14 +39,6 @@ const AsyncSignup = Loadable({
 });
 const AsyncResetPassword = Loadable({
   loader: () => import("./containers/ResetPassword"),
-  loading: LoadingSpinner
-});
-const AsyncNewNote = Loadable({
-  loader: () => import("./containers/NewNote"),
-  loading: LoadingSpinner
-});
-const AsyncNotes = Loadable({
-  loader: () => import("./containers/Notes"),
   loading: LoadingSpinner
 });
 const AsyncSettings = Loadable({
@@ -66,12 +60,9 @@ const AsyncNotFound = Loadable({
 
 export default ({ childProps }) => (
   <Switch>
-    <UnauthenticatedRoute
-      path="/"
-      exact
-      component={AsyncHome}
-      props={childProps}
-    />
+    <AppliedRoute path="/" exact component={AsyncHome} props={childProps} />
+    {/*Unauthenticated routes redirect authenticated users to the authenticated homepage */}
+    {/*Authenticated routes redirect unauthenticated users to the login page, with a redirect which will return them to their intended destination once authenticated */}
     <UnauthenticatedRoute
       path="/login"
       exact
@@ -88,18 +79,6 @@ export default ({ childProps }) => (
       path="/login/reset"
       exact
       component={AsyncResetPassword}
-      props={childProps}
-    />
-    <AuthenticatedRoute
-      path="/notes/new"
-      exact
-      component={AsyncNewNote}
-      props={childProps}
-    />
-    <AuthenticatedRoute
-      path="/notes/:id"
-      exact
-      component={AsyncNotes}
       props={childProps}
     />
     <AuthenticatedRoute
