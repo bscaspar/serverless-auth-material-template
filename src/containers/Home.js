@@ -1,8 +1,16 @@
 import React, { Component } from "react";
 import { API } from "aws-amplify";
-import "./Home.css";
+import { Typography } from "@material-ui/core";
+import { withStyles } from "@material-ui/core/styles";
 
-export default class Home extends Component {
+const styles = {
+  root: {
+    textAlign: "center",
+    padding: "60px"
+  }
+};
+
+class Home extends Component {
   constructor(props) {
     super(props);
 
@@ -34,20 +42,24 @@ export default class Home extends Component {
 
   renderLander() {
     return (
-      <div className="lander">
-        <h1>Scratch</h1>
-        <p>A simple note taking app</p>
-      </div>
+      <Typography variant="h4">
+        Welcome to the unauthenticated home page!
+      </Typography>
     );
   }
 
   renderAuthHome() {
-    return <div>Welcome to your logged in home!</div>;
+    return (
+      <Typography variant="h4">
+        Welcome to your authenticated home page!
+      </Typography>
+    );
   }
 
   render() {
+    const { classes } = this.props;
     return (
-      <div className="Home">
+      <div className={classes.root}>
         {this.props.isAuthenticated
           ? this.renderAuthHome()
           : this.renderLander()}
@@ -55,3 +67,4 @@ export default class Home extends Component {
     );
   }
 }
+export default withStyles(styles)(Home);

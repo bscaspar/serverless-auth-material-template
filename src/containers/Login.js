@@ -64,13 +64,13 @@ export default class Login extends Component {
           </FormGroup>
           <Link to="/login/reset">Forgot password?</Link>
           <LoaderButton
-            block
-            bsSize="large"
             disabled={!this.validateForm()}
             type="submit"
             isLoading={this.state.isLoading}
             text="Login"
             loadingText="Logging in..."
+            variant="contained"
+            color="primary"
           />
         </form>
       </div>

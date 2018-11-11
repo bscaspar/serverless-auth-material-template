@@ -1,11 +1,30 @@
 import React, { Component, Fragment } from "react";
 import { Link, withRouter } from "react-router-dom";
+import { compose } from "recompose";
 import { Navbar, Nav, NavItem } from "react-bootstrap";
+import Home from "@material-ui/icons/Home";
+import { withStyles } from "@material-ui/core/styles";
 import { LinkContainer } from "react-router-bootstrap";
 import { Auth } from "aws-amplify";
+import {
+  AppBar,
+  Toolbar,
+  Button,
+  Typography,
+  IconButton
+} from "@material-ui/core";
 
-import "./App.css";
 import Routes from "./Routes";
+
+const styles = {
+  root: {
+    flexGrow: 1
+  },
+  appbarRight: {
+    marginLeft: "auto"
+  },
+  appbarLeft: {}
+};
 
 class App extends Component {
   constructor(props) {
@@ -41,6 +60,8 @@ class App extends Component {
   };
 
   render() {
+    const { classes } = this.props;
+
     const childProps = {
       isAuthenticated: this.state.isAuthenticated,
       userHasAuthenticated: this.userHasAuthenticated
@@ -48,8 +69,41 @@ class App extends Component {
 
     return (
       !this.state.isAuthenticating && (
-        <div className="App container">
-          <Navbar fluid collapseOnSelect>
+        <div className={classes.root}>
+          <AppBar position="static">
+            <Toolbar>
+              <IconButton
+                className={classes.appbarLeft}
+                color="inherit"
+                component={Link}
+                to="/"
+              >
+                <Home />
+              </IconButton>
+              <section className={classes.appbarRight}>
+                {this.state.isAuthenticated ? (
+                  <Fragment>
+                    <Button component={Link} to="/settings" color="inherit">
+                      Settings
+                    </Button>
+                    <Button color="inherit" onClick={this.handleLogout}>
+                      Logout
+                    </Button>
+                  </Fragment>
+                ) : (
+                  <Fragment>
+                    <Button component={Link} to="/signup" color="inherit">
+                      Signup
+                    </Button>
+                    <Button component={Link} to="/login" color="inherit">
+                      Login
+                    </Button>
+                  </Fragment>
+                )}
+              </section>
+            </Toolbar>
+          </AppBar>
+          {/* <Navbar fluid collapseOnSelect>
             <Navbar.Header>
               <Navbar.Brand>
                 <Link to="/">Scratch</Link>
@@ -82,7 +136,7 @@ class App extends Component {
                 )}
               </Nav>
             </Navbar.Collapse>
-          </Navbar>
+          </Navbar> */}
           <Routes childProps={childProps} />
         </div>
       )
@@ -90,4 +144,9 @@ class App extends Component {
   }
 }
 
-export default withRouter(App);
+const enhance = compose(
+  withStyles(styles),
+  withRouter
+);
+
+export default enhance(App);
