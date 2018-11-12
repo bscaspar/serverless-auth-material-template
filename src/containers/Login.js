@@ -1,12 +1,28 @@
 import React, { Component } from "react";
-import { FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import { Auth } from "aws-amplify";
 import { Link } from "react-router-dom";
+import { withStyles, TextField, Typography, Grid } from "@material-ui/core";
 
 import "./Login.css";
 import LoaderButton from "../components/LoaderButton";
 
-export default class Login extends Component {
+const styles = theme => ({
+  root: {
+    flexGrow: 1,
+    marginTop: "60px"
+  },
+  textField: {
+    width: "360px",
+    marginTop: theme.spacing.unit,
+    marginBottom: theme.spacing.unit
+  },
+  button: {
+    marginTop: theme.spacing.unit,
+    marginBottom: theme.spacing.unit
+  }
+});
+
+class Login extends Component {
   constructor(props) {
     super(props);
 
@@ -42,38 +58,49 @@ export default class Login extends Component {
   };
 
   render() {
+    const { classes } = this.props;
     return (
-      <div className="Login">
-        <form onSubmit={this.handleSubmit}>
-          <FormGroup controlId="email" bsSize="large">
-            <ControlLabel>Email</ControlLabel>
-            <FormControl
-              autoFocus
-              type="email"
+      <Grid container className={classes.root}>
+        <Grid item xs={1} sm={3} md={4} />
+        <Grid item xs={10} sm={6} md={4}>
+          <form onSubmit={this.handleSubmit}>
+            <TextField
+              id="email"
+              label="Email"
+              className={classes.textField}
               value={this.state.email}
               onChange={this.handleChange}
+              variant="outlined"
             />
-          </FormGroup>
-          <FormGroup controlId="password" bsSize="large">
-            <ControlLabel>Password</ControlLabel>
-            <FormControl
+            <TextField
+              id="password"
+              label="Password"
+              type="password"
+              autoComplete="current-password"
+              className={classes.textField}
               value={this.state.password}
               onChange={this.handleChange}
-              type="password"
+              variant="outlined"
             />
-          </FormGroup>
-          <Link to="/login/reset">Forgot password?</Link>
-          <LoaderButton
-            disabled={!this.validateForm()}
-            type="submit"
-            isLoading={this.state.isLoading}
-            text="Login"
-            loadingText="Logging in..."
-            variant="contained"
-            color="primary"
-          />
-        </form>
-      </div>
+            <Link to="/login/reset">
+              <Typography variant="caption">Forgot password?</Typography>
+            </Link>
+            <LoaderButton
+              disabled={!this.validateForm()}
+              type="submit"
+              isLoading={this.state.isLoading}
+              text="Login"
+              loadingText="Logging in..."
+              variant="contained"
+              color="primary"
+              className={classes.button}
+            />
+          </form>
+        </Grid>
+        <Grid item xs={1} sm={3} md={4} />
+      </Grid>
     );
   }
 }
+
+export default withStyles(styles)(Login);
