@@ -1,9 +1,19 @@
 import React, { Component } from "react";
-import { LinkContainer } from "react-router-bootstrap";
+import { Link } from "react-router-dom";
 import LoaderButton from "../components/LoaderButton";
-import "./Settings.css";
+import { withStyles, Grid } from "@material-ui/core";
 
-export default class Settings extends Component {
+const styles = (theme) => ({
+  root: {
+    flexGrow: 1,
+    marginTop: "60px"
+  },
+  button: {
+    margin: theme.spacing.unit*.5
+  }
+})
+
+class Settings extends Component {
   constructor(props) {
     super(props);
 
@@ -11,15 +21,18 @@ export default class Settings extends Component {
   }
 
   render() {
+    const { classes } = this.props;
     return (
-      <div className="Settings">
-        <LinkContainer to="/settings/email">
-          <LoaderButton block bsSize="large" text="Change Email" />
-        </LinkContainer>
-        <LinkContainer to="/settings/password">
-          <LoaderButton block bsSize="large" text="Change Password" />
-        </LinkContainer>
-      </div>
-    );
+      <Grid container className={classes.root}>
+        <Grid item xs={1} sm={3} md={4} />
+        <Grid item xs={10} sm={6} md={4} >
+          <LoaderButton component={Link} to="/settings/email" className={classes.button} variant="contained" color="primary" text="Change Email" />
+          <LoaderButton component={Link} to="/settings/password" className={classes.button} variant="contained" color="primary" text="Change Password" />
+        </Grid>
+        <Grid item xs={1} sm={3} md={4} />
+      </Grid>
+      );
   }
 }
+
+export default withStyles(styles)(Settings);

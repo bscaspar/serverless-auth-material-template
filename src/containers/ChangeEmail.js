@@ -8,6 +8,23 @@ import {
 } from "react-bootstrap";
 import LoaderButton from "../components/LoaderButton";
 import "./ChangeEmail.css";
+import { Grid, TextField, withStyles } from "@material-ui/core";
+
+const styles = (theme) => ({
+  root: {
+    flexGrow: 1,
+    marginTop: "60px"
+  },
+  textField: {
+    width: "360px",
+    marginTop: theme.spacing.unit,
+    marginBottom: theme.spacing.unit
+  },
+  button: {
+    marginTop: theme.spacing.unit,
+    marginBottom: theme.spacing.unit
+  }
+})
 
 class ChangeEmail extends Component {
   constructor(props) {
@@ -77,68 +94,77 @@ class ChangeEmail extends Component {
   };
 
   renderUpdateForm() {
+    const { classes } = this.props;    
+    
     return (
       <form onSubmit={this.handleUpdateClick}>
-        <FormGroup bsSize="large" controlId="email">
-          <ControlLabel>Email</ControlLabel>
-          <FormControl
-            autoFocus
-            type="email"
-            value={this.state.email}
-            onChange={this.handleChange}
-          />
-        </FormGroup>
+        <TextField 
+          autoFocus
+          id="email"
+          label="Email"
+          className={classes.textField}
+          value={this.state.email}
+          onChange={this.handleChange}
+          variant="outlined"
+        />
         <LoaderButton
-          block
           type="submit"
-          bsSize="large"
           text="Update Email"
           loadingText="Updating..."
           disabled={!this.validateEmailForm()}
           isLoading={this.state.isSendingCode}
+          variant="contained"
+          color="primary"
+          className={classes.button}
         />
       </form>
     );
   }
 
   renderConfirmationForm() {
+    const { classes } = this.props;
+    
     return (
       <form onSubmit={this.handleConfirmClick}>
-        <FormGroup bsSize="large" controlId="code">
-          <ControlLabel>Confirmation Code</ControlLabel>
-          <FormControl
-            autoFocus
-            type="tel"
-            value={this.state.code}
-            onChange={this.handleChange}
-          />
-          <HelpBlock>
-            Please check your email ({this.state.email}) for the confirmation
-            code.
-          </HelpBlock>
-        </FormGroup>
+        <TextField 
+          autoFocus
+          id="code"
+          label="Confirmation Code"
+          className={classes.textField}
+          value={this.state.code}
+          onChange={this.handleChange}
+          variant="outlined"
+          helperText={`Please check your email (${this.state.email}) for the confirmation code.`}
+        />
         <LoaderButton
-          block
           type="submit"
-          bsSize="large"
           text="Confirm"
           loadingText="Confirm..."
           isLoading={this.state.isConfirming}
           disabled={!this.validateConfirmForm()}
+          variant="contained"
+          color="primary"
+          className={classes.button}
         />
       </form>
     );
   }
 
   render() {
+    const { classes } = this.props;
+
     return (
-      <div className="ChangeEmail">
-        {!this.state.codeSent
-          ? this.renderUpdateForm()
-          : this.renderConfirmationForm()}
-      </div>
+      <Grid container className={classes.root}>
+        <Grid item xs={1} sm={3} md={4} />
+        <Grid item xs={10} sm={6} md={4} >
+          {!this.state.codeSent
+            ? this.renderUpdateForm()
+            : this.renderConfirmationForm()}
+          </Grid>
+          <Grid item xs={1} sm={3} md={4} />
+      </Grid>
     );
   }
 }
 
-export default ChangeEmail;
+export default withStyles(styles)(ChangeEmail);
