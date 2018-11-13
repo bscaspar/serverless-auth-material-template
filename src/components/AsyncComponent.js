@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import { Glyphicon } from "react-bootstrap";
-import "./AsyncComponent.css";
+import SpinningIcon from "./SpinningIcon";
 
 export default function asyncComponent(importComponent) {
   class AsyncComponent extends Component {
@@ -23,11 +22,7 @@ export default function asyncComponent(importComponent) {
     render() {
       const C = this.state.component;
 
-      return C ? (
-        <C {...this.props} />
-      ) : (
-        <Glyphicon glyph="refresh" className="spinning" />
-      );
+      return C ? <C {...this.props} /> : <SpinningIcon />;
     }
   }
 

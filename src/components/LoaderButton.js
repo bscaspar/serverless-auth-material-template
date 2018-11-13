@@ -1,7 +1,6 @@
 import React from "react";
 import { Button } from "@material-ui/core";
-import Cached from "@material-ui/icons/Cached";
-import "./LoaderButton.css";
+import SpinningIcon from "./SpinningIcon";
 
 export default ({
   isLoading,
@@ -11,9 +10,7 @@ export default ({
   ...props
 }) => (
   <Button className="LoaderButton" disabled={disabled || isLoading} {...props}>
-    {isLoading && (
-      <Cached glyph="refresh" color="inherit" className="spinning" />
-    )}
+    {isLoading && <SpinningIcon />}
     {!isLoading ? text : loadingText}
   </Button>
 );
