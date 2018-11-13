@@ -1,5 +1,4 @@
 import React from "react";
-import "./NotFound.css";
 import { withStyles, Typography } from "@material-ui/core";
 
 const styles = {

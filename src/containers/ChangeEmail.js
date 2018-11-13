@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Auth } from "aws-amplify";
 import LoaderButton from "../components/LoaderButton";
-//import "./ChangeEmail.css";
 import { Grid, TextField, withStyles } from "@material-ui/core";
 
 const styles = theme => ({

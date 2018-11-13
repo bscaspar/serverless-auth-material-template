@@ -1,17 +1,32 @@
 import React, { Component } from "react";
 import { Auth } from "aws-amplify";
 import { Link } from "react-router-dom";
-import {
-  HelpBlock,
-  FormGroup,
-  Glyphicon,
-  FormControl,
-  ControlLabel
-} from "react-bootstrap";
+import { Grid, TextField, Typography, withStyles } from "@material-ui/core";
+import CheckCircleOutline from "@material-ui/icons/CheckCircleOutline";
+import green from "@material-ui/core/colors/green";
 import LoaderButton from "../components/LoaderButton";
 import "./ResetPassword.css";
 
-export default class ResetPassword extends Component {
+const styles = theme => ({
+  root: {
+    flesGrow: 1,
+    marginTop: "60px"
+  },
+  success: {
+    textAlign: "center"
+  },
+  textField: {
+    width: "360px",
+    marginTop: theme.spacing.unit,
+    marginBottom: theme.spacing.unit
+  },
+  button: {
+    marginTop: theme.spacing.unit,
+    marginBottom: theme.spacing.unit
+  }
+});
+
+class ResetPassword extends Component {
   constructor(props) {
     super(props);
 
@@ -90,23 +105,26 @@ export default class ResetPassword extends Component {
   };
 
   renderRequestCodeForm() {
+    const { classes } = this.props;
     return (
       <form onSubmit={this.handleSendCodeClick}>
-        <FormGroup bsSize="large" controlId="email">
-          <ControlLabel>Email</ControlLabel>
-          <FormControl
-            autoFocus
-            type="email"
-            value={this.state.email}
-            onChange={this.handleChange}
-          />
-        </FormGroup>
+        <TextField
+          autoFocus
+          type="email"
+          id="email"
+          label="Email"
+          value={this.state.email}
+          onChange={this.handleChange}
+          variant="outlined"
+          className={classes.textField}
+        />
         <LoaderButton
-          block
           type="submit"
-          bsSize="large"
           loadingText="Sending..."
           text="Send Confirmation"
+          variant="contained"
+          color="primary"
+          className={classes.button}
           isLoading={this.state.isSendingCode}
           disabled={!this.validateCodeForm()}
         />
@@ -115,44 +133,48 @@ export default class ResetPassword extends Component {
   }
 
   renderConfirmationForm() {
+    const { classes } = this.props;
     return (
       <form onSubmit={this.handleConfirmClick}>
-        <FormGroup bsSize="large" controlId="code">
-          <ControlLabel>Confirmation Code</ControlLabel>
-          <FormControl
-            autoFocus
-            type="tel"
-            value={this.state.code}
-            onChange={this.handleChange}
-          />
-          <HelpBlock>
-            Please check your email ({this.state.email}) for the confirmation
-            code.
-          </HelpBlock>
-        </FormGroup>
+        <TextField
+          autoFocus
+          type="tel"
+          id="code"
+          label="Code"
+          value={this.state.code}
+          onChange={this.handleChange}
+          variant="outlined"
+          className={classes.textField}
+          helperText={`Please check your email (${
+            this.state.email
+          }) for the confirmation code.`}
+        />
         <hr />
-        <FormGroup bsSize="large" controlId="password">
-          <ControlLabel>New Password</ControlLabel>
-          <FormControl
-            type="password"
-            value={this.state.password}
-            onChange={this.handleChange}
-          />
-        </FormGroup>
-        <FormGroup bsSize="large" controlId="confirmPassword">
-          <ControlLabel>Confirm Password</ControlLabel>
-          <FormControl
-            type="password"
-            onChange={this.handleChange}
-            value={this.state.confirmPassword}
-          />
-        </FormGroup>
+        <TextField
+          type="password"
+          id="password"
+          label="New Password"
+          variant="outlined"
+          className={classes.textField}
+          value={this.state.password}
+          onChange={this.handleChange}
+        />
+        <TextField
+          type="password"
+          id="confirmPassword"
+          label="Confirm New Password"
+          variant="outlined"
+          className={classes.textField}
+          value={this.state.confirmPassword}
+          onChange={this.handleChange}
+        />
         <LoaderButton
-          block
           type="submit"
-          bsSize="large"
           text="Confirm"
           loadingText="Confirm..."
+          variant="contained"
+          color="primary"
+          className={classes.button}
           isLoading={this.state.isConfirming}
           disabled={!this.validateResetForm()}
         />
@@ -161,13 +183,16 @@ export default class ResetPassword extends Component {
   }
 
   rendersuccessMessage() {
+    const { classes } = this.props;
     return (
-      <div className="success">
-        <Glyphicon glyph="ok" />
-        <p>Your password has been reset.</p>
+      <div className={classes.success}>
+        <CheckCircleOutline nativeColor={green[700]} />
+        <Typography variant="body1">Your password has been reset.</Typography>
         <p>
           <Link to="/login">
-            Click here to login with your new credentials.
+            <Typography variant="body1">
+              Click here to login with your new credentials.
+            </Typography>
           </Link>
         </p>
       </div>
@@ -175,14 +200,21 @@ export default class ResetPassword extends Component {
   }
 
   render() {
+    const { classes } = this.props;
+
     return (
-      <div className="ResetPassword">
-        {!this.state.codeSent
-          ? this.renderRequestCodeForm()
-          : !this.state.confirmed
+      <Grid container className={classes.root}>
+        <Grid item xs={1} sm={3} md={4} />
+        <Grid item xs={10} sm={6} md={4}>
+          {!this.state.codeSent
+            ? this.renderRequestCodeForm()
+            : !this.state.confirmed
             ? this.renderConfirmationForm()
             : this.rendersuccessMessage()}
-      </div>
+        </Grid>
+        <Grid item xs={1} sm={3} md={4} />
+      </Grid>
     );
   }
 }
+export default withStyles(styles)(ResetPassword);

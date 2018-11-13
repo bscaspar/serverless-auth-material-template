@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Auth } from "aws-amplify";
 import { Grid, TextField, withStyles } from "@material-ui/core";
 import LoaderButton from "../components/LoaderButton";
-//import "./ChangePassword.css";
 
 const styles = theme => ({
   root: {
