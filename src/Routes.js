@@ -1,17 +1,16 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
 import Loadable from "react-loadable";
-//import LoadingSpinner from "./components/LoadingSpinner";
+import SpinningIcon from "./components/SpinningIcon";
 import AppliedRoute from "./components/AppliedRoute";
 import AuthenticatedRoute from "./components/AuthenticatedRoute";
 import UnauthenticatedRoute from "./components/UnauthenticatedRoute";
-import { Glyphicon } from "react-bootstrap";
 
 // function myLoadable(opts) {
 //   return Loadable(
 //     Object.assign(
 //       {
-//         loading: LoadingSpinner,
+//         loading: SpinningIcon,
 //         delay: 2000
 //       },
 //       opts
@@ -19,43 +18,42 @@ import { Glyphicon } from "react-bootstrap";
 //   );
 // }
 //Loading spinner is buggy at the moment, flashing the spinner despite the delay prop set.
-const LoadingSpinner = () => <Glyphicon glyph="refresh" className="spinning" />;
 
 //Enables on-demand route-based loading for file chunks with the Loadable library, which takes advantage of Async file loading and adds a few other features
 
 const AsyncHome = Loadable({
   loader: () => import("./containers/Home"),
-  loading: LoadingSpinner,
+  loading: SpinningIcon,
   delay: 500
 });
 const AsyncLogin = Loadable({
   loader: () => import("./containers/Login"),
-  loading: LoadingSpinner,
+  loading: SpinningIcon,
   delay: 500
 });
 const AsyncSignup = Loadable({
   loader: () => import("./containers/Signup"),
-  loading: LoadingSpinner
+  loading: SpinningIcon
 });
 const AsyncResetPassword = Loadable({
   loader: () => import("./containers/ResetPassword"),
-  loading: LoadingSpinner
+  loading: SpinningIcon
 });
 const AsyncSettings = Loadable({
   loader: () => import("./containers/Settings"),
-  loading: LoadingSpinner
+  loading: SpinningIcon
 });
 const AsyncChangePassword = Loadable({
   loader: () => import("./containers/ChangePassword"),
-  loading: LoadingSpinner
+  loading: SpinningIcon
 });
 const AsyncChangeEmail = Loadable({
   loader: () => import("./containers/ChangeEmail"),
-  loading: LoadingSpinner
+  loading: SpinningIcon
 });
 const AsyncNotFound = Loadable({
   loader: () => import("./containers/NotFound"),
-  loading: LoadingSpinner
+  loading: SpinningIcon
 });
 
 export default ({ childProps }) => (

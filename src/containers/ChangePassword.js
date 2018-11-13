@@ -1,8 +1,24 @@
 import React, { Component } from "react";
 import { Auth } from "aws-amplify";
-import { ControlLabel, FormGroup, FormControl } from "react-bootstrap";
+import { Grid, TextField, withStyles } from "@material-ui/core";
 import LoaderButton from "../components/LoaderButton";
-import "./ChangePassword.css";
+//import "./ChangePassword.css";
+
+const styles = theme => ({
+  root: {
+    flesGrow: 1,
+    marginTop: "60px"
+  },
+  textField: {
+    width: "360px",
+    marginTop: theme.spacing.unit,
+    marginBottom: theme.spacing.unit
+  },
+  button: {
+    marginTop: theme.spacing.unit,
+    marginBottom: theme.spacing.unit
+  }
+});
 
 class ChangePassword extends Component {
   constructor(props) {
@@ -55,47 +71,57 @@ class ChangePassword extends Component {
   };
 
   render() {
+    const { classes } = this.props;
     return (
-      <div className="ChangePassword">
-        <form onSubmit={this.handleChangeClick}>
-          <FormGroup bsSize="large" controlId="oldPassword">
-            <ControlLabel>Old Password</ControlLabel>
-            <FormControl
+      <Grid container className={classes.root}>
+        <Grid item xs={1} sm={3} md={4} />
+        <Grid item xs={10} sm={6} md={4}>
+          <form onSubmit={this.handleChangeClick}>
+            <TextField
+              autoFocus
+              id="oldPassword"
               type="password"
+              label="Old Password"
+              variant="outlined"
               onChange={this.handleChange}
               value={this.state.oldPassword}
+              className={classes.textField}
             />
-          </FormGroup>
-          <hr />
-          <FormGroup bsSize="large" controlId="password">
-            <ControlLabel>New Password</ControlLabel>
-            <FormControl
+            <hr />
+            <TextField
               type="password"
+              id="password"
+              label="New Password"
+              variant="outlined"
               onChange={this.handleChange}
               value={this.state.password}
+              className={classes.textField}
             />
-          </FormGroup>
-          <FormGroup bsSize="large" controlId="confirmPassword">
-            <ControlLabel>Confirm Password</ControlLabel>
-            <FormControl
+            <TextField
               type="password"
+              id="confirmPassword"
+              label="Confirm New Password"
+              variant="outlined"
               onChange={this.handleChange}
               value={this.state.confirmPassword}
+              className={classes.textField}
             />
-          </FormGroup>
-          <LoaderButton
-            block
-            type="submit"
-            bsSize="large"
-            text="Change Password"
-            loadingText="Changing..."
-            disabled={!this.validateForm()}
-            isLoading={this.state.isChanging}
-          />
-        </form>
-      </div>
+            <LoaderButton
+              type="submit"
+              variant="contained"
+              color="primary"
+              text="Change Password"
+              loadingText="Changing..."
+              disabled={!this.validateForm()}
+              isLoading={this.state.isChanging}
+              className={classes.button}
+            />
+          </form>
+        </Grid>
+        <Grid item xs={1} sm={3} md={4} />
+      </Grid>
     );
   }
 }
 
-export default ChangePassword;
+export default withStyles(styles)(ChangePassword);

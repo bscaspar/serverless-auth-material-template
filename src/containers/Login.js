@@ -3,7 +3,6 @@ import { Auth } from "aws-amplify";
 import { Link } from "react-router-dom";
 import { withStyles, TextField, Typography, Grid } from "@material-ui/core";
 
-import "./Login.css";
 import LoaderButton from "../components/LoaderButton";
 
 const styles = theme => ({

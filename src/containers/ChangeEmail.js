@@ -1,16 +1,10 @@
 import React, { Component } from "react";
 import { Auth } from "aws-amplify";
-import {
-  ControlLabel,
-  FormControl,
-  FormGroup,
-  HelpBlock
-} from "react-bootstrap";
 import LoaderButton from "../components/LoaderButton";
-import "./ChangeEmail.css";
+//import "./ChangeEmail.css";
 import { Grid, TextField, withStyles } from "@material-ui/core";
 
-const styles = (theme) => ({
+const styles = theme => ({
   root: {
     flexGrow: 1,
     marginTop: "60px"
@@ -24,7 +18,7 @@ const styles = (theme) => ({
     marginTop: theme.spacing.unit,
     marginBottom: theme.spacing.unit
   }
-})
+});
 
 class ChangeEmail extends Component {
   constructor(props) {
@@ -94,14 +88,14 @@ class ChangeEmail extends Component {
   };
 
   renderUpdateForm() {
-    const { classes } = this.props;    
-    
+    const { classes } = this.props;
+
     return (
       <form onSubmit={this.handleUpdateClick}>
-        <TextField 
+        <TextField
           autoFocus
           id="email"
-          label="Email"
+          label="New email"
           className={classes.textField}
           value={this.state.email}
           onChange={this.handleChange}
@@ -123,10 +117,10 @@ class ChangeEmail extends Component {
 
   renderConfirmationForm() {
     const { classes } = this.props;
-    
+
     return (
       <form onSubmit={this.handleConfirmClick}>
-        <TextField 
+        <TextField
           autoFocus
           id="code"
           label="Confirmation Code"
@@ -134,7 +128,9 @@ class ChangeEmail extends Component {
           value={this.state.code}
           onChange={this.handleChange}
           variant="outlined"
-          helperText={`Please check your email (${this.state.email}) for the confirmation code.`}
+          helperText={`Please check your email (${
+            this.state.email
+          }) for the confirmation code.`}
         />
         <LoaderButton
           type="submit"
@@ -156,12 +152,12 @@ class ChangeEmail extends Component {
     return (
       <Grid container className={classes.root}>
         <Grid item xs={1} sm={3} md={4} />
-        <Grid item xs={10} sm={6} md={4} >
+        <Grid item xs={10} sm={6} md={4}>
           {!this.state.codeSent
             ? this.renderUpdateForm()
             : this.renderConfirmationForm()}
-          </Grid>
-          <Grid item xs={1} sm={3} md={4} />
+        </Grid>
+        <Grid item xs={1} sm={3} md={4} />
       </Grid>
     );
   }
