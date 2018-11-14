@@ -14,8 +14,7 @@ const styles = theme => ({
     marginBottom: theme.spacing.unit
   },
   button: {
-    marginTop: theme.spacing.unit,
-    marginBottom: theme.spacing.unit
+    marginTop: theme.spacing.unit
   }
 });
 
@@ -119,7 +118,8 @@ class ChangeEmail extends Component {
 
     return (
       <form onSubmit={this.handleConfirmClick}>
-        <TextField
+        <div>
+          <TextField
           autoFocus
           id="code"
           label="Confirmation Code"
@@ -131,6 +131,8 @@ class ChangeEmail extends Component {
             this.state.email
           }) for the confirmation code.`}
         />
+        </div>
+        <div>
         <LoaderButton
           type="submit"
           text="Confirm"
@@ -141,6 +143,7 @@ class ChangeEmail extends Component {
           color="primary"
           className={classes.button}
         />
+        </div>
       </form>
     );
   }

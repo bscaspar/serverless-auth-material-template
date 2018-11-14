@@ -14,8 +14,7 @@ const styles = theme => ({
     marginBottom: theme.spacing.unit
   },
   button: {
-    marginTop: theme.spacing.unit,
-    marginBottom: theme.spacing.unit
+    marginTop: theme.spacing.unit
   }
 });
 
@@ -76,6 +75,7 @@ class ChangePassword extends Component {
         <Grid item xs={1} sm={3} md={4} />
         <Grid item xs={10} sm={6} md={4}>
           <form onSubmit={this.handleChangeClick}>
+        <div>
             <TextField
               autoFocus
               id="oldPassword"
@@ -105,6 +105,8 @@ class ChangePassword extends Component {
               value={this.state.confirmPassword}
               className={classes.textField}
             />
+        </div>
+        <div>
             <LoaderButton
               type="submit"
               variant="contained"
@@ -115,6 +117,7 @@ class ChangePassword extends Component {
               isLoading={this.state.isChanging}
               className={classes.button}
             />
+        </div>
           </form>
         </Grid>
         <Grid item xs={1} sm={3} md={4} />

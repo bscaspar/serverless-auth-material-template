@@ -16,8 +16,7 @@ const styles = theme => ({
     marginBottom: theme.spacing.unit
   },
   button: {
-    marginTop: theme.spacing.unit,
-    marginBottom: theme.spacing.unit
+    marginTop: theme.spacing.unit
   }
 });
 
@@ -63,6 +62,7 @@ class Login extends Component {
         <Grid item xs={1} sm={3} md={4} />
         <Grid item xs={10} sm={6} md={4}>
           <form onSubmit={this.handleSubmit}>
+          <div>
             <TextField
               id="email"
               label="Email"
@@ -84,6 +84,8 @@ class Login extends Component {
             <Link to="/login/reset">
               <Typography variant="caption">Forgot password?</Typography>
             </Link>
+            </div>
+            <div>
             <LoaderButton
               disabled={!this.validateForm()}
               type="submit"
@@ -94,6 +96,7 @@ class Login extends Component {
               color="primary"
               className={classes.button}
             />
+            </div>
           </form>
         </Grid>
         <Grid item xs={1} sm={3} md={4} />

@@ -1,11 +1,48 @@
-import React, { Component } from 'react';
-import { HelpBlock, FormGroup, FormControl, ControlLabel, Modal, Button } from 'react-bootstrap';
-import { LinkContainer } from 'react-router-bootstrap';
-import LoaderButton from '../components/LoaderButton';
-import './Signup.css';
-import { Auth } from 'aws-amplify';
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import {
+  Grid,
+  TextField,
+  Typography,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  Button,
+  withStyles
+} from "@material-ui/core";
+import green from "@material-ui/core/colors/green"
+import LoaderButton from "../components/LoaderButton";
+import { Auth } from "aws-amplify";
 
-export default class Signup extends Component {
+const styles = theme => ({
+  root: {
+    flexGrow: 1,
+    marginTop: "60px"
+  },
+  textField: {
+    width: "360px",
+    marginTop: theme.spacing.unit,
+    marginBottom: theme.spacing.unit
+  },
+  button: {
+    marginTop: theme.spacing.unit * 0.5,
+    marginBottom: theme.spacing.unit * 0.5
+  },
+  buttonSignup: {
+    margin: theme.spacing.unit
+  },
+  buttonGreen: {
+    background: green[800],
+    color: "#fff"
+  },
+  dialog: {
+    padding: theme.spacing.unit,
+    width: "300px"
+  }
+});
+
+class Signup extends Component {
   constructor(props) {
     super(props);
 
@@ -42,13 +79,13 @@ export default class Signup extends Component {
     return this.state.confirmationCode.length > 0;
   }
 
-  handleChange = (e) => {
+  handleChange = e => {
     this.setState({
       [e.target.id]: e.target.value
     });
-  }
+  };
 
-  handleSubmit = async (e) => {
+  handleSubmit = async e => {
     e.preventDefault();
 
     this.setState({ isLoading: true });
@@ -63,16 +100,16 @@ export default class Signup extends Component {
       });
     } catch (e) {
       if (e.code === "UsernameExistsException") {
-        this.setState({ emailExists: true })
+        this.setState({ emailExists: true });
       } else {
         alert(e.message);
       }
     }
 
     this.setState({ isLoading: false });
-  }
+  };
 
-  handleConfirmationSubmit = async (e) => {
+  handleConfirmationSubmit = async e => {
     e.preventDefault();
 
     this.setState({ isLoading: true });
@@ -85,9 +122,9 @@ export default class Signup extends Component {
       this.props.history.push("/");
     } catch (e) {
       alert(e.message);
-      this.setState({ isLoading: false })
+      this.setState({ isLoading: false });
     }
-  }
+  };
 
   handleFormReset() {
     this.setState({
@@ -97,115 +134,172 @@ export default class Signup extends Component {
       confirmPassword: "",
       confirmationCode: "",
       newUser: null,
-      emailExists: false,
-    })
+      emailExists: false
+    });
   }
 
-  handleResendConfirmation = async (e) => {
+  handleResendConfirmation = async e => {
     try {
       const newUser = Auth.resendSignUp(this.state.email);
       this.setState({
         newUser
-      })
+      });
     } catch (e) {
       alert(e.message);
     }
+  };
+
+  handleModalExit = (e) => {
+    this.setState({
+      emailExists: false
+    })
   }
 
   renderConfirmationForm() {
+    const { classes } = this.props;
+
     return (
       <form onSubmit={this.handleConfirmationSubmit}>
-        <FormGroup controlId="confirmationCode" bsSize="large">
-          <ControlLabel>Confirmation Code</ControlLabel>
-          <FormControl
-            autoFocus
-            type="tel"
-            value={this.state.confirmationCode}
-            onChange={this.handleChange}
-          />
-          <HelpBlock>Please check your email for the code.</HelpBlock>
-        </FormGroup>
+        <TextField
+          autoFocus
+          type="tel"
+          id="confirmationCode"
+          label="Confirmation Code"
+          variant="outlined"
+          className={classes.textField}
+          value={this.state.confirmationCode}
+          onChange={this.handleChange}
+          helperText={`Please check your email (${
+            this.state.email
+          }) for the confirmation code.`}
+        />
         <LoaderButton
-          block
-          bsSize="large"
-          disabled={!this.validateConfirmationForm()}
           type="submit"
-          isLoading={this.state.isLoading}
           text="Verify"
           loadingText="Verifying..."
+          variant="contained"
+          color="primary"
+          className={classes.button}
+          disabled={!this.validateConfirmationForm()}
+          isLoading={this.state.isLoading}
         />
       </form>
     );
   }
 
   renderForm() {
+    const { classes } = this.props;
+
     return (
-      <div>
+      <React.Fragment>
         <form onSubmit={this.handleSubmit}>
-          <FormGroup controlId="email" bsSize="large">
-            <ControlLabel>Email</ControlLabel>
-            <FormControl
-              autoFocus
-              type="email"
-              value={this.state.email}
-              onChange={this.handleChange}
-            />
-          </FormGroup>
-          <FormGroup controlId="password" bsSize="large">
-            <ControlLabel>Password</ControlLabel>
-            <FormControl
-              value={this.state.password}
-              onChange={this.handleChange}
-              type="password"
-            />
-          </FormGroup>
-          <FormGroup controlId="confirmPassword" bsSize="large">
-            <ControlLabel>Password</ControlLabel>
-            <FormControl
-              value={this.state.confirmPassword}
-              onChange={this.handleChange}
-              type="password"
-            />
-          </FormGroup>
+        <div>
+          <TextField
+            autoFocus
+            type="email"
+            id="email"
+            label="Email"
+            variant="outlined"
+            className={classes.textField}
+            value={this.state.email}
+            onChange={this.handleChange}
+          />
+          <TextField
+            type="password"
+            id="password"
+            label="Password"
+            variant="outlined"
+            className={classes.textField}
+            value={this.state.password}
+            onChange={this.handleChange}
+          />
+          <TextField
+            type="password"
+            id="confirmPassword"
+            label="Confirm Password"
+            variant="outlined"
+            className={classes.textField}
+            value={this.state.confirmPassword}
+            onChange={this.handleChange}
+          />
+          </div>
+          <div>
           <LoaderButton
-            block
-            bsSize="large"
-            disabled={!this.validateForm()}
             type="submit"
-            isLoading={this.state.isLoading}
             text="Signup"
             loadingText="Signing up..."
+            variant="contained"
+            color="primary"
+            className={classes.button}
+            disabled={!this.validateForm()}
+            isLoading={this.state.isLoading}
           />
-        </form>
-        {this.state.emailExists
-          &&
-          <div className="static-modal">
-            <Modal.Dialog>
-              <Modal.Header>
-                <Modal.Title>This email already exists!</Modal.Title>
-              </Modal.Header>
-              <Modal.Body>Select one of the below options to continue.</Modal.Body>
-              <Modal.Footer>
-                <Button type="reset" onClick={this.handleFormReset}>Signup with different email</Button>
-                <Button type="button" onClick={this.handleResendConfirmation} bsStyle="primary">Resend Confirmation Code</Button>
-                <LinkContainer to="/login">
-                  <Button type="button" bsStyle="success" onClick={this.showLogin}>Go to Login page</Button>
-                </LinkContainer>
-              </Modal.Footer>
-            </Modal.Dialog>
           </div>
-        }
-      </div>
-    )
+        </form>
+        <Dialog 
+          open={this.state.emailExists}
+          onBackdropClick={this.handleModalExit}
+          onEscapeKeyDown={this.handleModalExit}
+          >
+          <div className={classes.dialog} >
+            <DialogTitle>This email already exists!</DialogTitle>
+            <DialogContent>
+              <DialogContentText style={{textAlign: "center"}}>Select one of the below options to continue</DialogContentText>
+            </DialogContent>
+            <hr />
+            <div style={{width: "100%"}}>
+            <Button
+              type="reset"
+              label="Signup with different email"
+              variant="contained"
+              fullWidth
+              className={classes.button}
+              onClick={this.handleFormReset}
+            >
+              Signup with different email
+            </Button>
+            <Button
+              type="button"
+              variant="contained"
+              color="primary"
+              fullWidth
+              className={classes.button}
+              onClick={this.handleResendConfirmation}
+            >
+              Resend Confirmation Code
+            </Button>
+            <Button
+              type="button"
+              variant="contained"
+              fullWidth
+              className={`${classes.buttonGreen} ${classes.button}`}
+              onClick={this.showLogin}
+              component={Link}
+              to="/login"
+            >
+              Go to Login
+            </Button>
+            </div>
+            </div>
+        </Dialog>
+      </React.Fragment>
+    );
   }
 
   render() {
+    const { classes } = this.props;
     return (
-      <div className="Signup">
-        {this.state.newUser === null
-          ? this.renderForm()
-          : this.renderConfirmationForm()}
-      </div>
-    )
+      <Grid container className={classes.root}>
+        <Grid item xs={1} sm={3} md={4} />
+        <Grid item xs={10} sm={6} md={4}>
+          {this.state.newUser === null
+            ? this.renderForm()
+            : this.renderConfirmationForm()}
+        </Grid>
+        <Grid item xs={1} sm={3} md={4} />
+      </Grid>
+    );
   }
 }
+
+export default withStyles(styles)(Signup);

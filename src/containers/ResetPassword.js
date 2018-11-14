@@ -5,7 +5,6 @@ import { Grid, TextField, Typography, withStyles } from "@material-ui/core";
 import CheckCircleOutline from "@material-ui/icons/CheckCircleOutline";
 import green from "@material-ui/core/colors/green";
 import LoaderButton from "../components/LoaderButton";
-import "./ResetPassword.css";
 
 const styles = theme => ({
   root: {
@@ -21,8 +20,7 @@ const styles = theme => ({
     marginBottom: theme.spacing.unit
   },
   button: {
-    marginTop: theme.spacing.unit,
-    marginBottom: theme.spacing.unit
+    marginTop: theme.spacing.unit
   }
 });
 
@@ -108,6 +106,7 @@ class ResetPassword extends Component {
     const { classes } = this.props;
     return (
       <form onSubmit={this.handleSendCodeClick}>
+      <div>
         <TextField
           autoFocus
           type="email"
@@ -118,6 +117,8 @@ class ResetPassword extends Component {
           variant="outlined"
           className={classes.textField}
         />
+        </div>
+        <div>
         <LoaderButton
           type="submit"
           loadingText="Sending..."
@@ -128,6 +129,7 @@ class ResetPassword extends Component {
           isLoading={this.state.isSendingCode}
           disabled={!this.validateCodeForm()}
         />
+        </div>
       </form>
     );
   }

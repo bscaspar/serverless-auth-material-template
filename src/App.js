@@ -1,10 +1,8 @@
 import React, { Component, Fragment } from "react";
 import { Link, withRouter } from "react-router-dom";
 import { compose } from "recompose";
-import { Navbar, Nav, NavItem } from "react-bootstrap";
 import Home from "@material-ui/icons/Home";
 import { withStyles } from "@material-ui/core/styles";
-import { LinkContainer } from "react-router-bootstrap";
 import { Auth } from "aws-amplify";
 import {
   AppBar,
