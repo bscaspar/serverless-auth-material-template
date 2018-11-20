@@ -6,30 +6,18 @@ import AppliedRoute from "./components/AppliedRoute";
 import AuthenticatedRoute from "./components/AuthenticatedRoute";
 import UnauthenticatedRoute from "./components/UnauthenticatedRoute";
 
-// function myLoadable(opts) {
-//   return Loadable(
-//     Object.assign(
-//       {
-//         loading: SpinningIcon,
-//         delay: 2000
-//       },
-//       opts
-//     )
-//   );
-// }
-//Loading spinner is buggy at the moment, flashing the spinner despite the delay prop set.
+//Loading spinner is buggy, flashing the spinner despite the delay prop set.
 
 //Enables on-demand route-based loading for file chunks with the Loadable library, which takes advantage of Async file loading and adds a few other features
 
 const AsyncHome = Loadable({
   loader: () => import("./containers/Home"),
   loading: SpinningIcon,
-  delay: 500
+  delay: 1000
 });
 const AsyncLogin = Loadable({
   loader: () => import("./containers/Login"),
-  loading: SpinningIcon,
-  delay: 500
+  loading: SpinningIcon
 });
 const AsyncSignup = Loadable({
   loader: () => import("./containers/Signup"),
@@ -58,15 +46,10 @@ const AsyncNotFound = Loadable({
 
 export default ({ childProps }) => (
   <Switch>
-    <AppliedRoute path="/" exact component={AsyncHome} props={childProps} />
+    <Route path="/" exact component={AsyncHome} props={childProps} />
     {/*Unauthenticated routes redirect authenticated users to the authenticated homepage */}
     {/*Authenticated routes redirect unauthenticated users to the login page, with a redirect which will return them to their intended destination once authenticated */}
-    <UnauthenticatedRoute
-      path="/login"
-      exact
-      component={AsyncLogin}
-      props={childProps}
-    />
+    <Route path="/login" exact component={AsyncLogin} props={childProps} />
     <UnauthenticatedRoute
       path="/signup"
       exact

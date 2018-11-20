@@ -4,13 +4,7 @@ import { compose } from "recompose";
 import Home from "@material-ui/icons/Home";
 import { withStyles } from "@material-ui/core/styles";
 import { Auth } from "aws-amplify";
-import {
-  AppBar,
-  Toolbar,
-  Button,
-  Typography,
-  IconButton
-} from "@material-ui/core";
+import { AppBar, Toolbar, Button, IconButton } from "@material-ui/core";
 
 import Routes from "./Routes";
 
@@ -101,40 +95,6 @@ class App extends Component {
               </section>
             </Toolbar>
           </AppBar>
-          {/* <Navbar fluid collapseOnSelect>
-            <Navbar.Header>
-              <Navbar.Brand>
-                <Link to="/">Scratch</Link>
-              </Navbar.Brand>
-              <Navbar.Toggle />
-            </Navbar.Header>
-            <Navbar.Collapse>
-              <Nav pullRight>
-                {this.state.isAuthenticated ? (
-                  <Fragment>
-                    <LinkContainer to="/settings">
-                      <NavItem>Settings</NavItem>
-                    </LinkContainer>
-                    <NavItem onClick={this.handleLogout}>Logout</NavItem>
-                  </Fragment>
-                ) : (
-                  <Fragment>
-                    <LinkContainer
-                      to={{
-                        pathname: "/signup",
-                        state: "rerender"
-                      }}
-                    >
-                      <NavItem>Signup</NavItem>
-                    </LinkContainer>
-                    <LinkContainer to="/login">
-                      <NavItem>Login</NavItem>
-                    </LinkContainer>
-                  </Fragment>
-                )}
-              </Nav>
-            </Navbar.Collapse>
-          </Navbar> */}
           <Routes childProps={childProps} />
         </div>
       )

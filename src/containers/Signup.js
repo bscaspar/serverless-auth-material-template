@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import {
   Grid,
   TextField,
-  Typography,
   Dialog,
   DialogTitle,
   DialogContent,
@@ -11,7 +10,7 @@ import {
   Button,
   withStyles
 } from "@material-ui/core";
-import green from "@material-ui/core/colors/green"
+import green from "@material-ui/core/colors/green";
 import LoaderButton from "../components/LoaderButton";
 import { Auth } from "aws-amplify";
 
@@ -149,11 +148,11 @@ class Signup extends Component {
     }
   };
 
-  handleModalExit = (e) => {
+  handleModalExit = e => {
     this.setState({
       emailExists: false
-    })
-  }
+    });
+  };
 
   renderConfirmationForm() {
     const { classes } = this.props;
@@ -173,16 +172,18 @@ class Signup extends Component {
             this.state.email
           }) for the confirmation code.`}
         />
-        <LoaderButton
-          type="submit"
-          text="Verify"
-          loadingText="Verifying..."
-          variant="contained"
-          color="primary"
-          className={classes.button}
-          disabled={!this.validateConfirmationForm()}
-          isLoading={this.state.isLoading}
-        />
+        <div>
+          <LoaderButton
+            type="submit"
+            text="Verify"
+            loadingText="Verifying..."
+            variant="contained"
+            color="primary"
+            className={classes.button}
+            disabled={!this.validateConfirmationForm()}
+            isLoading={this.state.isLoading}
+          />
+        </div>
       </form>
     );
   }
@@ -193,94 +194,96 @@ class Signup extends Component {
     return (
       <React.Fragment>
         <form onSubmit={this.handleSubmit}>
-        <div>
-          <TextField
-            autoFocus
-            type="email"
-            id="email"
-            label="Email"
-            variant="outlined"
-            className={classes.textField}
-            value={this.state.email}
-            onChange={this.handleChange}
-          />
-          <TextField
-            type="password"
-            id="password"
-            label="Password"
-            variant="outlined"
-            className={classes.textField}
-            value={this.state.password}
-            onChange={this.handleChange}
-          />
-          <TextField
-            type="password"
-            id="confirmPassword"
-            label="Confirm Password"
-            variant="outlined"
-            className={classes.textField}
-            value={this.state.confirmPassword}
-            onChange={this.handleChange}
-          />
+          <div>
+            <TextField
+              autoFocus
+              type="email"
+              id="email"
+              label="Email"
+              variant="outlined"
+              className={classes.textField}
+              value={this.state.email}
+              onChange={this.handleChange}
+            />
+            <TextField
+              type="password"
+              id="password"
+              label="Password"
+              variant="outlined"
+              className={classes.textField}
+              value={this.state.password}
+              onChange={this.handleChange}
+            />
+            <TextField
+              type="password"
+              id="confirmPassword"
+              label="Confirm Password"
+              variant="outlined"
+              className={classes.textField}
+              value={this.state.confirmPassword}
+              onChange={this.handleChange}
+            />
           </div>
           <div>
-          <LoaderButton
-            type="submit"
-            text="Signup"
-            loadingText="Signing up..."
-            variant="contained"
-            color="primary"
-            className={classes.button}
-            disabled={!this.validateForm()}
-            isLoading={this.state.isLoading}
-          />
+            <LoaderButton
+              type="submit"
+              text="Signup"
+              loadingText="Signing up..."
+              variant="contained"
+              color="primary"
+              className={classes.button}
+              disabled={!this.validateForm()}
+              isLoading={this.state.isLoading}
+            />
           </div>
         </form>
-        <Dialog 
+        <Dialog
           open={this.state.emailExists}
           onBackdropClick={this.handleModalExit}
           onEscapeKeyDown={this.handleModalExit}
-          >
-          <div className={classes.dialog} >
+        >
+          <div className={classes.dialog}>
             <DialogTitle>This email already exists!</DialogTitle>
             <DialogContent>
-              <DialogContentText style={{textAlign: "center"}}>Select one of the below options to continue</DialogContentText>
+              <DialogContentText style={{ textAlign: "center" }}>
+                Select one of the below options to continue
+              </DialogContentText>
             </DialogContent>
             <hr />
-            <div style={{width: "100%"}}>
-            <Button
-              type="reset"
-              label="Signup with different email"
-              variant="contained"
-              fullWidth
-              className={classes.button}
-              onClick={this.handleFormReset}
-            >
-              Signup with different email
-            </Button>
-            <Button
-              type="button"
-              variant="contained"
-              color="primary"
-              fullWidth
-              className={classes.button}
-              onClick={this.handleResendConfirmation}
-            >
-              Resend Confirmation Code
-            </Button>
-            <Button
-              type="button"
-              variant="contained"
-              fullWidth
-              className={`${classes.buttonGreen} ${classes.button}`}
-              onClick={this.showLogin}
-              component={Link}
-              to="/login"
-            >
-              Go to Login
-            </Button>
+            <div style={{ width: "100%" }}>
+              <Button
+                type="reset"
+                label="Signup with different email"
+                variant="contained"
+                fullWidth
+                className={classes.button}
+                onClick={this.handleFormReset}
+              >
+                Signup with different email
+              </Button>
+              <Button
+                type="button"
+                variant="contained"
+                color="primary"
+                fullWidth
+                className={classes.button}
+                onClick={this.handleResendConfirmation}
+              >
+                Resend Confirmation Code
+              </Button>
+              <Button
+                type="button"
+                variant="contained"
+                fullWidth
+                className={`${classes.buttonGreen} ${classes.button}`}
+                onClick={this.showLogin}
+                component={Link}
+                to="/login"
+              >
+                Go to Login
+              </Button>
             </div>
-            </div>
+          </div>
         </Dialog>
       </React.Fragment>
     );

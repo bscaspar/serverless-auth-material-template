@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { API } from "aws-amplify";
+// import { API } from "aws-amplify";
 import { Typography } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 
@@ -16,7 +16,7 @@ class Home extends Component {
 
     this.state = {
       isLoading: true,
-      notes: []
+      data: []
     };
   }
 
@@ -27,8 +27,8 @@ class Home extends Component {
 
     //API call in constructor
     // try {
-    //   const notes = await this.notes();
-    //   this.setState({ notes });
+    //   const data = await this.data();
+    //   this.setState({ data });
     // } catch (e) {
     //   alert(e);
     // }
@@ -36,8 +36,8 @@ class Home extends Component {
     this.setState({ isLoading: false });
   }
 
-  // notes() {
-  //   return API.get("notes", "/notes");
+  // data() {
+  //   return API.get("data", "/data");
   // }
 
   renderLander() {
