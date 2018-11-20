@@ -1,5 +1,5 @@
 #Project Description
 
-This project is a basic app build on Create React App that implements the AWS Amplify library to enable basic auth through Amazon Cognito Identity Pools and User Pools. It includes basic routing logic to direct authenticated or unauthenticated users to appropriate pages, and some basic settings functionality, Material UI components, and templates to deploy a serverless API to AWS Lambda.
+This project is a basic app build on Create React App that implements the AWS Amplify library to enable basic auth through Amazon Cognito Identity Pools and User Pools. It includes basic routing logic to direct authenticated or unauthenticated users to appropriate pages, and some basic settings functionality, and Material UI components.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

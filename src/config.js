@@ -9,9 +9,9 @@ export default {
     URL: ""
   },
   cognito: {
-    REGION: "",
-    USER_POOL_ID: "",
-    APP_CLIENT_ID: "",
-    IDENTITY_POOL_ID: ""
+    REGION: "us-west-2",
+    USER_POOL_ID: "us-west-2_PKCeItuxz",
+    APP_CLIENT_ID: "1q2asupl82uqm2475l9ph05vpp",
+    IDENTITY_POOL_ID: "us-west-2:9a9f38b5-5054-451d-91cc-bd8b744a867a"
   }
 };
