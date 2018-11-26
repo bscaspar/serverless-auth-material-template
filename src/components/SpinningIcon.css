@@ -1,6 +1,10 @@
-.spinning {
-  display: block;
+.spinningContainer {
+  margin: auto;
   text-align: center;
+  margin-top: 60px;
+}
+
+.spinning {
   animation: spin 1s infinite linear;
 }
 @keyframes spin {
