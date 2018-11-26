@@ -15,7 +15,13 @@ const AsyncChangeEmail = lazy(() => import("./containers/ChangeEmail"));
 const AsyncNotFound = lazy(() => import("./containers/NotFound"));
 
 export default ({ childProps }) => (
-  <Suspense fallback={<SpinningIcon />}>
+  <Suspense
+    fallback={
+      <div className="spinningContainer">
+        <SpinningIcon />
+      </div>
+    }
+  >
     <Switch>
       <AppliedRoute path="/" exact component={AsyncHome} props={childProps} />
       {/*Unauthenticated routes redirect authenticated users to the authenticated homepage */}
